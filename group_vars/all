@@ -1,0 +1,31 @@
+users:
+- name: sanchez
+  comment: Rick Sanchez
+  shell: /bin/bash
+  home: /home/sanchez
+  use_sudo: yes
+  state: present
+- name: morty
+  comment: Morty Smith
+  shell: /bin/sh
+  home: /var/tmp/morty
+  use_sudo: no
+  state: present
+- name: beth
+  comment: Beth Smith
+  shell: /bin/sh
+  home: /home/beth
+  use_sudo: no
+  state: present
+- name: jerry
+  comment: Jerry Smith
+  shell: /bin/bash
+  home: /tmp/jerry
+  use_sudo: no
+  state: present
+- name: summer
+  comment: Summer Smith
+  shell: /bin/sh
+  home: /home/summer
+  use_sudo: no
+  state: present

@@ -1,0 +1,23 @@
+- name: Users | create users, shell, home dirs
+  user: name="{{ item.name }}"
+    comment="{{ item.comment | default('') }}"
+    shell="{{ item.shell | default('/bin/sh') }}"
+    home="{{ item.home | default('/home/'+item.name) }}"
+    state="{{ item.state | default('present') }}"
+    remove="{{ item.remove | default('no') }}"
+    force="{{ item.remove | default('no') }}"
+  with_items: "{{ users }}"
+
+- name: Keys | authorized key upload
+  authorized_key: user={{ item.name }}
+    key="{{ lookup('file', 'pub_keys/{{ item.name }}.pub') }}"
+  when: item.state is undefined or item.state == 'present'
+  with_items: "{{ users }}"
+
+- name: Sudoers | update sudoers file
+  lineinfile: "dest=/etc/sudoers
+    insertafter=EOF
+    line='{{ item.name }} ALL=(ALL) NOPASSWD: ALL'
+    regexp='^{{ item.name }} .*'
+    state={{ 'present' if item.use_sudo == True and item.state == 'present' else 'absent' }}"
+  with_items: "{{ users }}"
