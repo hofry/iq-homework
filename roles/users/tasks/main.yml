@@ -6,6 +6,7 @@
     state="{{ item.state | default('present') }}"
     remove="{{ item.remove | default('no') }}"
     force="{{ item.remove | default('no') }}"
+    groups="{{ item.groups | default('') }}"
   with_items: "{{ users }}"
 
 - name: Keys | authorized key upload
